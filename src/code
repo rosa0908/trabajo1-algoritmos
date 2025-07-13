@@ -1,0 +1,154 @@
+import pandas as pd
+from datetime import datetime, timedelta
+import math
+
+# Lista de registros activos y finalizados
+registros_activos = []
+registros_finalizados = []
+
+# Configuración de zonas
+zonas_disponibles = ["A", "B", "C", "D", "E"]
+tarifas = {
+    "carro": 3000,
+    "moto": 1500
+}
+
+# Verificar si una zona está ocupada
+def zona_ocupada(zona):
+    for r in registros_activos:
+        if r["Zona"] == zona:
+            return True
+    return False
+
+# Registrar entrada
+def registrar_conductor():
+    print("\n--- Registro de Ingreso ---")
+    nombre = input("Nombre completo del conductor: ")
+    cedula = input("Cédula: ")
+    telefono = input("Teléfono: ")
+    placa = input("Placa del vehículo: ")
+    tipo = input("Tipo de vehículo (carro/moto): ").lower()
+
+    if tipo not in tarifas:
+        print("❌ Tipo de vehículo no válido.")
+        return
+
+    print(f"Zonas disponibles: {', '.join(zonas_disponibles)}")
+    zona = input("Selecciona una zona: ").upper()
+
+    if zona not in zonas_disponibles:
+        print("❌ Zona inválida.")
+        return
+    if zona_ocupada(zona):
+        print("⚠️ Zona ya ocupada. Elige otra.")
+        return
+
+    hora_entrada = datetime.now()
+
+    registro = {
+        "Nombre": nombre,
+        "Cédula": cedula,
+        "Teléfono": telefono,
+        "Placa": placa,
+        "TipoVehículo": tipo,
+        "Zona": zona,
+        "HoraEntrada": hora_entrada
+    }
+
+    registros_activos.append(registro)
+    print("✅ Registro exitoso.")
+
+# Mostrar vehículos actualmente parqueados
+def mostrar_activos():
+    if not registros_activos:
+        print("📭 No hay vehículos actualmente en el parqueadero.")
+        return
+    print("\n🚗 Vehículos en el parqueadero:")
+    for i, r in enumerate(registros_activos, start=1):
+        print(f"{i}. {r['Placa']} - Zona {r['Zona']} - Ingresó a las {r['HoraEntrada'].strftime('%Y-%m-%d %H:%M:%S')}")
+
+# Registrar salida
+def registrar_salida():
+    if not registros_activos:
+        print("📭 No hay vehículos registrados.")
+        return
+
+    placa = input("Ingresa la placa del vehículo que va a salir: ").upper()
+    encontrado = None
+    for r in registros_activos:
+        if r["Placa"].upper() == placa:
+            encontrado = r
+            break
+
+    if not encontrado:
+        print("❌ Vehículo no encontrado.")
+        return
+
+    hora_salida = datetime.now()
+    hora_entrada = encontrado["HoraEntrada"]
+    tiempo_total = hora_salida - hora_entrada
+    horas = math.ceil(tiempo_total.total_seconds() / 3600)
+
+    tarifa = tarifas[encontrado["TipoVehículo"]]
+    valor_pagar = horas * tarifa
+
+    # Crear registro final
+    registro_final = encontrado.copy()
+    registro_final["HoraSalida"] = hora_salida
+    registro_final["Horas"] = horas
+    registro_final["ValorPagado"] = valor_pagar
+
+    registros_finalizados.append(registro_final)
+    registros_activos.remove(encontrado)
+
+    print("\n🚪 Vehículo retirado exitosamente:")
+    print(f"⏰ Tiempo total: {horas} hora(s)")
+    print(f"💰 Valor a pagar: ${valor_pagar:,}")
+
+# Guardar todo en CSV
+def guardar_csv():
+    if registros_finalizados:
+        df = pd.DataFrame(registros_finalizados)
+        df["HoraEntrada"] = df["HoraEntrada"].astype(str)
+        df["HoraSalida"] = df["HoraSalida"].astype(str)
+        df.to_csv("registros_completos_parqueadero.csv", index=False)
+        print("💾 Datos guardados en 'registros_completos_parqueadero.csv'.")
+    else:
+        print("⚠️ No hay registros finalizados para guardar.")
+
+# Ver todo el historial
+def mostrar_historial():
+    if registros_finalizados:
+        df = pd.DataFrame(registros_finalizados)
+        print("\n📚 Historial de parqueo completado:")
+        print(df[["Placa", "Zona", "HoraEntrada", "HoraSalida", "Horas", "ValorPagado"]])
+    else:
+        print("📭 No hay historial aún.")
+
+# Menú principal
+while True:
+    print("\n--- Menú Principal Parqueadero ---")
+    print("1. Registrar ingreso")
+    print("2. Registrar salida")
+    print("3. Ver vehículos en parqueadero")
+    print("4. Ver historial")
+    print("5. Guardar en CSV")
+    print("6. Salir")
+
+    opcion = input("Selecciona una opción (1-6): ")
+
+    if opcion == "1":
+        registrar_conductor()
+    elif opcion == "2":
+        registrar_salida()
+    elif opcion == "3":
+        mostrar_activos()
+    elif opcion == "4":
+        mostrar_historial()
+    elif opcion == "5":
+        guardar_csv()
+    elif opcion == "6":
+        print("👋 Cerrando el sistema. ¡Gracias por usar el parqueadero!")
+        break
+    else:
+        print("❌ Opción inválida.")
