@@ -1,5 +1,5 @@
 import pandas as pd
-from datetime import datetime, timedelta
+from datetime import datetime
 import math
 
 # Lista de registros activos y finalizados
@@ -20,28 +20,32 @@ def zona_ocupada(zona):
             return True
     return False
 
-# Registrar entrada
+# Registrar entrada (mejorado con validaciones por campo)
 def registrar_conductor():
     print("\n--- Registro de Ingreso ---")
+    
     nombre = input("Nombre completo del conductor: ")
     cedula = input("Cédula: ")
     telefono = input("Teléfono: ")
     placa = input("Placa del vehículo: ")
-    tipo = input("Tipo de vehículo (carro/moto): ").lower()
 
-    if tipo not in tarifas:
-        print("❌ Tipo de vehículo no válido.")
-        return
+    # Validar tipo de vehículo
+    while True:
+        tipo = input("Tipo de vehículo (carro/moto): ").lower()
+        if tipo in tarifas:
+            break
+        print("❌ Tipo de vehículo no válido. Intente de nuevo.")
 
+    # Mostrar zonas y validar
     print(f"Zonas disponibles: {', '.join(zonas_disponibles)}")
-    zona = input("Selecciona una zona: ").upper()
-
-    if zona not in zonas_disponibles:
-        print("❌ Zona inválida.")
-        return
-    if zona_ocupada(zona):
-        print("⚠️ Zona ya ocupada. Elige otra.")
-        return
+    while True:
+        zona = input("Selecciona una zona: ").upper()
+        if zona not in zonas_disponibles:
+            print("❌ Zona inválida. Intente de nuevo.")
+        elif zona_ocupada(zona):
+            print("⚠️ Zona ya ocupada. Elige otra.")
+        else:
+            break
 
     hora_entrada = datetime.now()
 
