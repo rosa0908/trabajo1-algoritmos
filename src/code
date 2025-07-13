@@ -20,10 +20,10 @@ def zona_ocupada(zona):
             return True
     return False
 
-# Registrar entrada (mejorado con validaciones por campo)
+# Registrar entrada 
 def registrar_conductor():
     print("\n--- Registro de Ingreso ---")
-    
+
     nombre = input("Nombre completo del conductor: ")
     cedula = input("Cédula: ")
     telefono = input("Teléfono: ")
@@ -36,7 +36,7 @@ def registrar_conductor():
             break
         print("❌ Tipo de vehículo no válido. Intente de nuevo.")
 
-    # Mostrar zonas y validar
+    # Validar zona disponible y no ocupada
     print(f"Zonas disponibles: {', '.join(zonas_disponibles)}")
     while True:
         zona = input("Selecciona una zona: ").upper()
@@ -71,22 +71,27 @@ def mostrar_activos():
     for i, r in enumerate(registros_activos, start=1):
         print(f"{i}. {r['Placa']} - Zona {r['Zona']} - Ingresó a las {r['HoraEntrada'].strftime('%Y-%m-%d %H:%M:%S')}")
 
-# Registrar salida
+# Registrar salida con validación de placa
 def registrar_salida():
     if not registros_activos:
         print("📭 No hay vehículos registrados.")
         return
 
-    placa = input("Ingresa la placa del vehículo que va a salir: ").upper()
-    encontrado = None
-    for r in registros_activos:
-        if r["Placa"].upper() == placa:
-            encontrado = r
-            break
+    while True:
+        placa = input("Ingresa la placa del vehículo que va a salir (o escribe 'cancelar' para volver): ").upper()
+        if placa == 'CANCELAR':
+            print("🔙 Operación cancelada.")
+            return
 
-    if not encontrado:
-        print("❌ Vehículo no encontrado.")
-        return
+        encontrado = None
+        for r in registros_activos:
+            if r["Placa"].upper() == placa:
+                encontrado = r
+                break
+
+        if encontrado:
+            break
+        print("❌ Vehículo no encontrado. Intente de nuevo.")
 
     hora_salida = datetime.now()
     hora_entrada = encontrado["HoraEntrada"]
@@ -96,7 +101,6 @@ def registrar_salida():
     tarifa = tarifas[encontrado["TipoVehículo"]]
     valor_pagar = horas * tarifa
 
-    # Crear registro final
     registro_final = encontrado.copy()
     registro_final["HoraSalida"] = hora_salida
     registro_final["Horas"] = horas
@@ -129,7 +133,7 @@ def mostrar_historial():
     else:
         print("📭 No hay historial aún.")
 
-# Menú principal
+# Menú principal con validación
 while True:
     print("\n--- Menú Principal Parqueadero ---")
     print("1. Registrar ingreso")
@@ -139,7 +143,7 @@ while True:
     print("5. Guardar en CSV")
     print("6. Salir")
 
-    opcion = input("Selecciona una opción (1-6): ")
+    opcion = input("Selecciona una opción (1-6): ").strip()
 
     if opcion == "1":
         registrar_conductor()
@@ -155,4 +159,4 @@ while True:
         print("👋 Cerrando el sistema. ¡Gracias por usar el parqueadero!")
         break
     else:
-        print("❌ Opción inválida.")
+        print("❌ Opción inválida. Intente de nuevo.")
