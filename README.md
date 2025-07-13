@@ -2,7 +2,7 @@
 
 ## Integrantes
 
-- **Laura Melina Tapasco Avendaño**
+
 - **Enilda Rosa Ayazo Manga**
 - **Juan José Pérez Durango**
 
@@ -10,14 +10,11 @@
 
 Somos estudiantes de la Facultad de Ingeniería de la Universidad de Antioquia:
 
-- **Laura Melina Tapasco Avendaño** – Sede Segovia – Programa 549  
+
 - **Enilda Rosa Ayazo Manga** – Sede Medellín – Programa 549  
 - **Juan José Pérez Durango** – Sede Occidente – Programa 549  
 
 ## Fortalezas y habilidades
-
-**Laura Melina Tapasco Avendaño**  
-Organización, adaptación, resiliencia, gestión del estrés, iniciativa.
 
 **Enilda Rosa Ayazo Manga**  
 Empatía, responsabilidad, honestidad, proactividad, inteligencia emocional.
