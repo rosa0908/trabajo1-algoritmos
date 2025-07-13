@@ -91,7 +91,7 @@ Este programa ayuda a llevar el control de un parqueadero. Registra quién entra
 - **Configuración de repositorio en GitHub** – Líder del equipo  
 - **Registro de usuarios y vehículos** – Integrante 1  
 - **Cálculo de cobros** – Integrante 2  
-- **Reportes y exportación a CSV** – Integrante 3  
+- **Reportes y exportación a CSV** – Integrante 1 
 - **Unión y pruebas de módulos** – Todo el equipo  
 - **Documentación final** – Todo el equipo  
 - **Publicación en GitHub** – Líder del equipo
