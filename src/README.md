@@ -29,8 +29,7 @@ Responsabilidad, interpretación matemática, compromiso, respeto.
 **SmartPark UdeA**  
 Este es un proyecto educativo con el que buscamos mejorar el funcionamiento de un parqueadero dentro de la universidad. Queremos que sea más organizado, rápido y práctico, ayudando a registrar vehículos, calcular cobros y mostrar reportes.
 
-![image]([https://github.com/user-attachments/assets/e810a4fe-ec9b-4b54-a85f-98ab04aad4c5](https://github.com/rosa0908/trabajo1-algoritmos/blob/main/src/Foto%20Proyecto.jpeg))
-
+![Foto Proyecto](https://github.com/user-attachments/assets/fce78852-3ade-4981-bdc2-439ecd8e7871)
 
 ---
 
