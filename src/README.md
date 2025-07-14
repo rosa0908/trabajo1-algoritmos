@@ -11,8 +11,8 @@
 Somos estudiantes de la Facultad de Ingeniería de la Universidad de Antioquia:
 
 
-- **Enilda Rosa Ayazo Manga** – Sede Medellín – Programa 549  
-- **Juan José Pérez Durango** – Sede Occidente – Programa 549  
+- **Enilda Rosa Ayazo Manga** – Sede Medellín – Programa 549 Ingenieria industrial virtual
+- **Juan José Pérez Durango** – Sede Occidente – Programa 549 Ingenieria industrial virtual
 
 ## Fortalezas y habilidades
 
